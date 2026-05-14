@@ -19,7 +19,7 @@ class ThemeManager:
     def __init__(self, root=None, default_theme: str = DARK_THEME):
         self.root = root
         self.current_theme = default_theme
-        self.style = ttk.Style() if root is None else ttk.Style(root)
+        self.style = ttk.Style()
 
     def apply_theme(self, theme_name: str) -> str:
         """Apply a TkInforHard theme and register component styles."""
@@ -49,4 +49,3 @@ class ThemeManager:
         """Return the active theme tokens."""
 
         return get_tokens(self.current_theme)
-
