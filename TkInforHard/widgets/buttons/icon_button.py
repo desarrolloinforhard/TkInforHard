@@ -8,8 +8,8 @@ class IHIconButton(IHButton):
 
     def __init__(self, master=None, icon: str = "", text: str = "", tooltip: str | None = None, **kwargs):
         label = text or icon
-        kwargs.setdefault("width", 3 if not text else None)
+        if not text:
+            kwargs.setdefault("min_width", 42)
         super().__init__(master, text=label, **kwargs)
         self.icon = icon
         self.tooltip = tooltip
-

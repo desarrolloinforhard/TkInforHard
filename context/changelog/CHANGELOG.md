@@ -2,6 +2,14 @@
 
 Formato basado en versionado semantico.
 
+## [Unreleased]
+
+### Changed
+
+- `IHButton` ahora usa Canvas internamente para garantizar bordes redondeados reales y estados visuales consistentes.
+- `IHIconButton` e `IHToggleButton` heredan el nuevo comportamiento canvas de `IHButton`.
+- `ThemeManager` tolera fallos internos de reconstruccion de themes de `ttkbootstrap` y mantiene tokens/estilos propios activos.
+
 ## [1.0.0]
 
 ### Added
@@ -25,4 +33,3 @@ Formato basado en versionado semantico.
 ### Removed
 
 - No aplica en la version inicial.
-

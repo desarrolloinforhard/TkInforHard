@@ -13,6 +13,18 @@ from TkInforHard.theme.themes import bootstrap_theme_for
 from TkInforHard.theme.tokens import get_tokens
 
 
+def _emit_theme_changed(widget) -> None:
+    """Emit the theme-change event on a live widget tree."""
+
+    try:
+        widget.event_generate("<<IHThemeChanged>>")
+        children = widget.winfo_children()
+    except Exception:
+        return
+    for child in children:
+        _emit_theme_changed(child)
+
+
 class ThemeManager:
     """Applies, toggles and exposes the active TkInforHard design theme."""
 
@@ -28,7 +40,10 @@ class ThemeManager:
         try:
             self.style.theme_use(theme_name)
         except Exception:
-            self.style.theme_use(bootstrap_theme)
+            try:
+                self.style.theme_use(bootstrap_theme)
+            except Exception:
+                pass
         self.current_theme = theme_name
         register_styles(self.style, theme_name)
         if self.root is not None:
@@ -37,6 +52,7 @@ class ThemeManager:
                 self.root.configure(background=tokens["color"]["background"])
             except Exception:
                 pass
+            _emit_theme_changed(self.root)
         return self.current_theme
 
     def toggle_theme(self) -> str:
