@@ -12,17 +12,17 @@ THEMES = {
         "type": "dark",
         "base_theme": "darkly",
         "colors": {
-            "primary": palette.PRIMARY,
+            "primary": palette.DARK_PRIMARY,
             "secondary": palette.GRAY_500,
             "success": palette.SUCCESS,
             "info": palette.INFO,
-            "warning": palette.WARNING,
-            "danger": palette.DANGER,
+            "warning": palette.DARK_WARNING,
+            "danger": palette.DARK_DANGER,
             "light": palette.GRAY_100,
             "dark": palette.DARK_BACKGROUND,
             "bg": palette.DARK_BACKGROUND,
             "fg": palette.DARK_TEXT,
-            "selectbg": palette.PRIMARY,
+            "selectbg": palette.DARK_PRIMARY,
             "selectfg": palette.DARK_TEXT,
             "border": palette.DARK_BORDER,
             "inputfg": palette.DARK_TEXT,
@@ -59,4 +59,3 @@ def bootstrap_theme_for(theme_name: str) -> str:
     """Return the bundled ttkbootstrap base theme for a TkInforHard theme."""
 
     return THEMES.get(theme_name, THEMES["inforhard_dark"])["base_theme"]
-

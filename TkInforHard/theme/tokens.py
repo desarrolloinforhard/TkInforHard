@@ -10,8 +10,8 @@ from TkInforHard.theme import palette, radius, spacing, typography
 TOKENS = {
     "inforhard_dark": {
         "color": {
-            "primary": palette.PRIMARY,
-            "primary_hover": palette.PRIMARY_LIGHT,
+            "primary": palette.DARK_PRIMARY,
+            "primary_hover": palette.DARK_PRIMARY_HOVER,
             "background": palette.DARK_BACKGROUND,
             "surface": palette.DARK_SURFACE,
             "surface_alt": palette.DARK_SURFACE_ALT,
@@ -20,8 +20,8 @@ TOKENS = {
             "muted": palette.DARK_MUTED,
             "success": palette.SUCCESS,
             "info": palette.INFO,
-            "warning": palette.WARNING,
-            "danger": palette.DANGER,
+            "warning": palette.DARK_WARNING,
+            "danger": palette.DARK_DANGER,
         },
         "font": {
             "family": typography.FONT_FAMILY,
@@ -49,7 +49,8 @@ TOKENS = {
     "inforhard_light": {
         "color": {
             "primary": palette.PRIMARY,
-            "primary_hover": palette.PRIMARY_DARK,
+            "primary_hover": palette.PRIMARY_HOVER,
+            "primary_soft": palette.PRIMARY_SOFT,
             "background": palette.LIGHT_BACKGROUND,
             "surface": palette.LIGHT_SURFACE,
             "surface_alt": palette.LIGHT_SURFACE_ALT,
@@ -91,4 +92,3 @@ def get_tokens(theme_name: str = "inforhard_dark") -> dict:
     """Return a defensive copy of the selected theme token set."""
 
     return deepcopy(TOKENS.get(theme_name, TOKENS["inforhard_dark"]))
-

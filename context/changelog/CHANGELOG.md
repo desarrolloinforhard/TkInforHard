@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- Paleta base redefinida con verde Inforhard `#008A46`, variantes para hover y tokens especificos para modo claro/oscuro.
 - `IHButton` ahora usa Canvas internamente para garantizar bordes redondeados reales y estados visuales consistentes.
 - `IHIconButton` e `IHToggleButton` heredan el nuevo comportamiento canvas de `IHButton`.
 - `ThemeManager` tolera fallos internos de reconstruccion de themes de `ttkbootstrap` y mantiene tokens/estilos propios activos.
