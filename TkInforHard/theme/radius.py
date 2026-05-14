@@ -1,0 +1,9 @@
+"""Radius tokens."""
+
+RADIUS_NONE = 0
+RADIUS_SM = 6
+RADIUS_MD = 12
+RADIUS_LG = 18
+RADIUS_XL = 24
+RADIUS_PILL = 999
+
