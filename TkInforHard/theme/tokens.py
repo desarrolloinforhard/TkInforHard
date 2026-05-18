@@ -66,6 +66,12 @@ TOKENS = {
             "error": palette.DARK_DANGER,
             "disabled": palette.DARK_SURFACE_ALT,
         },
+        "card": {
+            "background": palette.DARK_CARD_BACKGROUND,
+            "background_hover": palette.DARK_CARD_BACKGROUND_HOVER,
+            "border": palette.DARK_CARD_BORDER,
+            "shadow": palette.DARK_CARD_SHADOW,
+        },
     },
     "inforhard_light": {
         "color": {
@@ -125,6 +131,12 @@ TOKENS = {
             "placeholder": palette.LIGHT_INPUT_PLACEHOLDER,
             "error": palette.DANGER,
             "disabled": palette.LIGHT_SURFACE_ALT,
+        },
+        "card": {
+            "background": palette.LIGHT_CARD_BACKGROUND,
+            "background_hover": palette.LIGHT_CARD_BACKGROUND_HOVER,
+            "border": palette.LIGHT_CARD_BORDER,
+            "shadow": palette.LIGHT_CARD_SHADOW,
         },
     },
 }
