@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import tkinter as tk
 
+from PIL import Image, ImageDraw, ImageTk
+
 try:
     import ttkbootstrap as ttk
 except Exception:  # pragma: no cover
@@ -69,36 +71,21 @@ class _IHInputSurface(ttk.Frame):
             return token["background_hover"], token["border_hover"]
         return token["background"], token["border"]
 
-    def _draw_rounded_rect(self, width: int, height: int, fill: str, outline: str) -> None:
-        x1, y1, x2, y2 = 1, 1, width - 2, height - 2
-        radius = min(self.RADIUS, height // 2)
-        points = [
-            x1 + radius,
-            y1,
-            x2 - radius,
-            y1,
-            x2,
-            y1,
-            x2,
-            y1 + radius,
-            x2,
-            y2 - radius,
-            x2,
-            y2,
-            x2 - radius,
-            y2,
-            x1 + radius,
-            y2,
-            x1,
-            y2,
-            x1,
-            y2 - radius,
-            x1,
-            y1 + radius,
-            x1,
-            y1,
-        ]
-        self.canvas.create_polygon(points, smooth=True, splinesteps=24, fill=fill, outline=outline, width=1)
+    def _render_surface_image(self, width: int, height: int, fill: str, outline: str):
+        """Render an anti-aliased rounded input surface with Pillow."""
+
+        scale = 3
+        image = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle(
+            (1 * scale, 1 * scale, (width - 2) * scale, (height - 2) * scale),
+            radius=min(self.RADIUS, height // 2) * scale,
+            fill=fill,
+            outline=outline,
+            width=scale,
+        )
+        image = image.resize((width, height), Image.Resampling.LANCZOS)
+        return ImageTk.PhotoImage(image)
 
     def _draw_surface(self, _event=None) -> None:
         self._tokens = self._resolve_tokens()
@@ -108,7 +95,10 @@ class _IHInputSurface(ttk.Frame):
         fill, outline = self._surface_colors()
         self.canvas.delete("surface")
         self.canvas.configure(background=colors["surface"])
-        self._draw_rounded_rect(width, height, fill, outline)
+        if width < 8 or height < 8:
+            return
+        self._surface_image = self._render_surface_image(width, height, fill, outline)
+        self.canvas.create_image(0, 0, anchor="nw", image=self._surface_image, tags="surface")
         self.canvas.tag_lower("all")
 
     def _on_enter(self, _event=None) -> None:

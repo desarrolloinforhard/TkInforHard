@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import tkinter as tk
 
+from PIL import Image, ImageDraw, ImageTk
+
 try:
     import ttkbootstrap as ttk
 except Exception:  # pragma: no cover
@@ -76,37 +78,23 @@ class IHTextArea(ttk.Frame):
         width = max(self.canvas.winfo_width(), 1)
         height = max(self.canvas.winfo_height(), 96)
         fill, outline = self._surface_colors()
-        x1, y1, x2, y2 = 1, 1, width - 2, height - 2
-        radius = 12
-        points = [
-            x1 + radius,
-            y1,
-            x2 - radius,
-            y1,
-            x2,
-            y1,
-            x2,
-            y1 + radius,
-            x2,
-            y2 - radius,
-            x2,
-            y2,
-            x2 - radius,
-            y2,
-            x1 + radius,
-            y2,
-            x1,
-            y2,
-            x1,
-            y2 - radius,
-            x1,
-            y1 + radius,
-            x1,
-            y1,
-        ]
         self.canvas.delete("all")
         self.canvas.configure(background=self._tokens["color"]["surface"])
-        self.canvas.create_polygon(points, smooth=True, splinesteps=24, fill=fill, outline=outline, width=1)
+        if width < 8 or height < 8:
+            return
+        scale = 3
+        image = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle(
+            (1 * scale, 1 * scale, (width - 2) * scale, (height - 2) * scale),
+            radius=12 * scale,
+            fill=fill,
+            outline=outline,
+            width=scale,
+        )
+        image = image.resize((width, height), Image.Resampling.LANCZOS)
+        self._surface_image = ImageTk.PhotoImage(image)
+        self.canvas.create_image(0, 0, anchor="nw", image=self._surface_image)
         self.window_id = self.canvas.create_window(12, 12, anchor="nw", window=self.text, width=max(width - 24, 20), height=max(height - 24, 20))
         self.text.configure(bg=fill, fg=self._tokens["color"]["text"], insertbackground=self._tokens["color"]["text"])
 
