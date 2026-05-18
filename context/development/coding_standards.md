@@ -9,6 +9,7 @@ Reglas:
 - Componentes pequenos y componibles.
 - Sin colores hardcodeados en widgets.
 - Imports publicos desde `TkInforHard.widgets`.
+- Todo componente, variante o estado visual nuevo debe agregarse tambien a la demo en la misma fase.
 
 Verificacion obligatoria por fase:
 

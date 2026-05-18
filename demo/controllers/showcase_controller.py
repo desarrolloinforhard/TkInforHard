@@ -9,6 +9,7 @@ from demo.views.buttons_view import ButtonsView
 from demo.views.cards_view import CardsView
 from demo.views.feedback_view import FeedbackView
 from demo.views.inputs_view import InputsView
+from demo.views.navigation_view import NavigationView
 from demo.views.showcase_view import ShowcaseView
 from demo.views.tables_view import TablesView
 
@@ -25,6 +26,7 @@ class ShowcaseController:
             "buttons": ButtonsView,
             "cards": CardsView,
             "inputs": InputsView,
+            "navigation": NavigationView,
             "tables": TablesView,
             "feedback": FeedbackView,
         }
@@ -38,6 +40,7 @@ class ShowcaseController:
             ("Buttons", lambda: self.show("buttons")),
             ("Cards", lambda: self.show("cards")),
             ("Inputs", lambda: self.show("inputs")),
+            ("Navigation", lambda: self.show("navigation")),
             ("Tables", lambda: self.show("tables")),
             ("Feedback", lambda: self.show("feedback")),
         ]
@@ -49,4 +52,3 @@ class ShowcaseController:
             self.current.destroy()
         self.current = self.views[view_name](self.content)
         self.current.grid(row=0, column=0, sticky="nsew")
-

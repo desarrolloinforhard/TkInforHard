@@ -86,7 +86,7 @@ Los screenshots se agregaran en futuras iteraciones:
 1. Crear el componente dentro de la categoria correspondiente en `TkInforHard/widgets/`.
 2. Usar tokens y estilos centralizados; no hardcodear colores en la API del widget.
 3. Exportar el componente en el `__init__.py` de su categoria y en `TkInforHard/widgets/__init__.py`.
-4. Agregar ejemplo en la demo.
+4. Agregar ejemplo visible en la demo; ningun componente nuevo queda completo sin showcase.
 5. Documentar en `context/components/`.
 6. Registrar el cambio en `context/changelog/CHANGELOG.md`.
 7. Ejecutar:
