@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- La vista `Navigation` demuestra el `IHDrawerMenu` como menu lateral izquierdo con control de mostrar/ocultar.
 - La demo incorpora una vista `Navigation` y se formaliza la regla de showcase obligatorio para cada componente nuevo.
 - Se agrega `widget_reference.md` como referencia unificada de API, parametros y ejemplos de todos los widgets publicos.
 - Se agrega `IHDrawerMenu`, un panel lateral animado con API para items y widgets internos.

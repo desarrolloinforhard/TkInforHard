@@ -92,6 +92,7 @@ class IHDrawerMenu(ttk.Frame):
         """Open the drawer with a sliding animation."""
 
         self._is_open = True
+        self.lift()
         self._animate_to(self._open_x())
 
     def close(self) -> None:

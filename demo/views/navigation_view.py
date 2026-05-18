@@ -16,9 +16,17 @@ class NavigationView(IHPage):
         stack.add(IHMenuItem(stack, text="Item activo", active=True, width=220))
         stack.add(IHMenuItem(stack, text="Item normal", width=220))
 
-        drawer = IHDrawerMenu(self, title="Herramientas", side="right", width=280)
-        drawer.add_item("Cambios", active=True)
-        drawer.add_item("Local")
-        drawer.add_item("Confirmacion")
+        drawer = IHDrawerMenu(self, title="Menu deslizante", side="left", width=280)
+        drawer.add_item("Dashboard", active=True)
+        drawer.add_item("Ventas")
+        drawer.add_item("Productos")
+        drawer.add_item("Configuracion")
         drawer.add_widget(IHButton(drawer.content, text="Accion adicional", variant="success", outline=True))
-        stack.add(drawer.create_toggle_button(stack, text="Abrir Drawer", variant="success", outline=True))
+        stack.add(
+            drawer.create_toggle_button(
+                stack,
+                text="Mostrar / ocultar menu deslizante",
+                variant="success",
+                outline=True,
+            )
+        )
