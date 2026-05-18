@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import tkinter as tk
 
+from PIL import Image, ImageDraw, ImageTk
+
 try:
     import ttkbootstrap as ttk
 except Exception:  # pragma: no cover
@@ -71,30 +73,31 @@ class IHCard(ttk.Frame):
     def _resolve_tokens(self) -> dict:
         return get_tokens(self._resolve_theme_name())
 
-    def _draw_rounded_rect(self, x1: int, y1: int, x2: int, y2: int, radius: int, **kwargs) -> None:
-        """Draw a strict rounded rectangle without spline overshoot artifacts."""
+    def _render_card_image(self, width: int, height: int, background: str, border: str, shadow: str):
+        """Render a clean anti-aliased rounded card surface with Pillow."""
 
-        fill = kwargs.get("fill", "")
-        outline = kwargs.get("outline", "")
-        width = kwargs.get("width", 1)
-        diameter = radius * 2
+        scale = 3
+        image = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(image)
+        radius = self.RADIUS * scale
 
-        self.canvas.create_rectangle(x1 + radius, y1, x2 - radius, y2, fill=fill, outline="")
-        self.canvas.create_rectangle(x1, y1 + radius, x2, y2 - radius, fill=fill, outline="")
-        self.canvas.create_arc(x1, y1, x1 + diameter, y1 + diameter, start=90, extent=90, style="pieslice", fill=fill, outline="")
-        self.canvas.create_arc(x2 - diameter, y1, x2, y1 + diameter, start=0, extent=90, style="pieslice", fill=fill, outline="")
-        self.canvas.create_arc(x2 - diameter, y2 - diameter, x2, y2, start=270, extent=90, style="pieslice", fill=fill, outline="")
-        self.canvas.create_arc(x1, y2 - diameter, x1 + diameter, y2, start=180, extent=90, style="pieslice", fill=fill, outline="")
+        if self.variant == "elevated":
+            draw.rounded_rectangle(
+                (3 * scale, 4 * scale, (width - 2) * scale, (height - 2) * scale),
+                radius=radius,
+                fill=shadow,
+            )
 
-        if outline:
-            self.canvas.create_line(x1 + radius, y1, x2 - radius, y1, fill=outline, width=width)
-            self.canvas.create_line(x2, y1 + radius, x2, y2 - radius, fill=outline, width=width)
-            self.canvas.create_line(x1 + radius, y2, x2 - radius, y2, fill=outline, width=width)
-            self.canvas.create_line(x1, y1 + radius, x1, y2 - radius, fill=outline, width=width)
-            self.canvas.create_arc(x1, y1, x1 + diameter, y1 + diameter, start=90, extent=90, style="arc", outline=outline, width=width)
-            self.canvas.create_arc(x2 - diameter, y1, x2, y1 + diameter, start=0, extent=90, style="arc", outline=outline, width=width)
-            self.canvas.create_arc(x2 - diameter, y2 - diameter, x2, y2, start=270, extent=90, style="arc", outline=outline, width=width)
-            self.canvas.create_arc(x1, y2 - diameter, x1 + diameter, y2, start=180, extent=90, style="arc", outline=outline, width=width)
+        outline = None if self.variant == "elevated" else border
+        draw.rounded_rectangle(
+            (1 * scale, 1 * scale, (width - 3) * scale, (height - 3) * scale),
+            radius=radius,
+            fill=background,
+            outline=outline,
+            width=scale if outline else 1,
+        )
+        image = image.resize((width, height), Image.Resampling.LANCZOS)
+        return ImageTk.PhotoImage(image)
 
     def _draw(self, _event=None) -> None:
         self._tokens = self._resolve_tokens()
@@ -106,10 +109,10 @@ class IHCard(ttk.Frame):
         border = card["border"]
         self.canvas.delete("all")
         self.canvas.configure(background=color["surface"])
-        if self.variant == "elevated":
-            self._draw_rounded_rect(3, 4, width - 2, height - 2, self.RADIUS, fill=card["shadow"], outline="")
-        outline = "" if self.variant == "elevated" else border
-        self._draw_rounded_rect(1, 1, width - 3, height - 3, self.RADIUS, fill=background, outline=outline, width=1)
+        if width < 8 or height < 8:
+            return
+        self._card_image = self._render_card_image(width, height, background, border, card["shadow"])
+        self.canvas.create_image(0, 0, anchor="nw", image=self._card_image)
         self.window_id = self.canvas.create_window(
             self.padding,
             self.padding,
