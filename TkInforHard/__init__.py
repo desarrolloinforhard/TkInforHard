@@ -16,5 +16,8 @@ __all__ = [
     "IHApplication",
     "IHConfig",
     "ThemeManager",
+    "IHStatusCard",
+    "RoundedTableview",
+    "draw_rounded_rect",
 ]
 

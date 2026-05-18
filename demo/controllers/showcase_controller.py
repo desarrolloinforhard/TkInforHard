@@ -10,6 +10,7 @@ from demo.views.cards_view import CardsView
 from demo.views.feedback_view import FeedbackView
 from demo.views.inputs_view import InputsView
 from demo.views.navigation_view import NavigationView
+from demo.views.reports_view import ReportsView
 from demo.views.showcase_view import ShowcaseView
 from demo.views.tables_view import TablesView
 
@@ -29,6 +30,7 @@ class ShowcaseController:
             "navigation": NavigationView,
             "tables": TablesView,
             "feedback": FeedbackView,
+            "reports": ReportsView,
         }
         self.current = None
 
@@ -43,6 +45,7 @@ class ShowcaseController:
             ("Navigation", lambda: self.show("navigation")),
             ("Tables", lambda: self.show("tables")),
             ("Feedback", lambda: self.show("feedback")),
+            ("Reportes", lambda: self.show("reports")),
         ]
 
     def show(self, view_name: str) -> None:
