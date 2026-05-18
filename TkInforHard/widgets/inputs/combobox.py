@@ -36,6 +36,7 @@ class IHCombobox(ttk.Frame):
         self.surface.canvas.bind("<Configure>", self._resize_combobox, add="+")
         self.combobox.bind("<FocusIn>", self._on_focus_in)
         self.combobox.bind("<FocusOut>", self._on_focus_out)
+        self.bind("<<IHThemeChanged>>", self._on_theme_changed, add="+")
 
     def get(self) -> str:
         """Return the selected value."""
@@ -65,4 +66,9 @@ class IHCombobox(ttk.Frame):
 
     def _on_focus_out(self, _event=None) -> None:
         self.surface.focused = False
+        self.surface._draw_surface()
+
+    def _on_theme_changed(self, _event=None) -> None:
+        self._tokens = self._resolve_tokens()
+        self.surface._tokens = self._tokens
         self.surface._draw_surface()

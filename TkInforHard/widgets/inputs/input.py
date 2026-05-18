@@ -163,6 +163,7 @@ class IHInput(ttk.Frame):
         if helper:
             self.helper_label = ttk.Label(self, text=helper, style="IH.CardMuted.TLabel")
             self.helper_label.pack(anchor="w", pady=(5, 0))
+        self.bind("<<IHThemeChanged>>", self._on_theme_changed, add="+")
         self._apply_entry_colors()
         self._show_placeholder_if_needed()
 
@@ -204,6 +205,7 @@ class IHInput(ttk.Frame):
 
     def _apply_entry_colors(self) -> None:
         self._tokens = self._resolve_tokens()
+        self.surface._tokens = self._tokens
         token = self._tokens["input"]
         text_color = token["placeholder"] if self._placeholder_active else self._tokens["color"]["text"]
         self.entry.configure(
@@ -236,4 +238,7 @@ class IHInput(ttk.Frame):
         self.surface.focused = False
         self._show_placeholder_if_needed()
         self.surface._draw_surface()
+        self._apply_entry_colors()
+
+    def _on_theme_changed(self, _event=None) -> None:
         self._apply_entry_colors()
