@@ -1,7 +1,7 @@
 """Main showcase view."""
 
 from TkInforHard.layout import IHGrid, IHPage, IHScrollFrame
-from TkInforHard.widgets import IHBadge, IHInfoCard, IHMetricCard, IHSectionHeader
+from TkInforHard.widgets import IHBadge, IHDrawerMenu, IHInfoCard, IHMetricCard, IHSectionHeader
 
 
 class ShowcaseView(IHPage):
@@ -34,3 +34,8 @@ class ShowcaseView(IHPage):
         ).pack(fill="x", pady=(18, 0))
         IHBadge(scroll.content, text="v1.0.0 base").pack(anchor="w", pady=(12, 0))
 
+        drawer = IHDrawerMenu(self, title="Panel rapido", side="right", width=260)
+        drawer.add_item("Cambios")
+        drawer.add_item("Local")
+        drawer.add_item("Confirmacion")
+        drawer.create_toggle_button(scroll.content, text="Abrir panel", variant="success", outline=True).pack(anchor="w", pady=(14, 0))

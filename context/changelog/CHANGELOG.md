@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- Se agrega `IHDrawerMenu`, un panel lateral animado con API para items y widgets internos.
 - Las cards pasan a superficies canvas redondeadas con variantes `default`, `outlined`, `elevated` e interaccion opcional.
 - La familia de inputs pasa a superficies canvas redondeadas con estados visuales centralizados, placeholders y tokens light/dark propios.
 - `IHButton` adopta una ergonomia compacta inspirada en el sistema de referencia: `Segoe UI 10 bold`, alturas reducidas y canvas suavizado con `splinesteps=24`.
