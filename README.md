@@ -68,6 +68,12 @@ python demo/main.py
 
 La demo muestra botones, cards, inputs, tablas, navegacion y feedback usando componentes `IH*`.
 
+## Referencia de Widgets
+
+La guia completa de API, parametros y ejemplos de uso vive en:
+
+- `context/components/widget_reference.md`
+
 ## Screenshots
 
 Los screenshots se agregaran en futuras iteraciones:

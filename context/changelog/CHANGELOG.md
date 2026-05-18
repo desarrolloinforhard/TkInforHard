@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- Se agrega `widget_reference.md` como referencia unificada de API, parametros y ejemplos de todos los widgets publicos.
 - Se agrega `IHDrawerMenu`, un panel lateral animado con API para items y widgets internos.
 - Las cards pasan a superficies canvas redondeadas con variantes `default`, `outlined`, `elevated` e interaccion opcional.
 - La familia de inputs pasa a superficies canvas redondeadas con estados visuales centralizados, placeholders y tokens light/dark propios.
