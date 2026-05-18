@@ -27,3 +27,10 @@ Reglas para botones:
 - Dibujar fill, borde, hover y pressed desde tokens.
 - No hardcodear colores dentro de pantallas consumidoras.
 - Los botones derivados deben extender `IHButton`, no `ttk.Button`.
+
+## Tokens trasladados del sistema de referencia
+
+- Base de accion compacta: `Segoe UI 10 bold`.
+- Padding visual equivalente a `11 x 7`.
+- Curva canvas suavizada con `splinesteps=24`.
+- Los botones de navegacion no reutilizan `IHButton`: usan `IHMenuItem`, una familia visual separada.

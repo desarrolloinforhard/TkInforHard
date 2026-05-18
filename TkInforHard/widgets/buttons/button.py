@@ -13,9 +13,9 @@ from TkInforHard.theme.tokens import get_tokens
 
 
 SIZE_TOKENS = {
-    "sm": {"height": 32, "pad_x": 12, "font_size": 10, "min_width": 86},
-    "md": {"height": 40, "pad_x": 16, "font_size": 11, "min_width": 104},
-    "lg": {"height": 48, "pad_x": 20, "font_size": 13, "min_width": 128},
+    "sm": {"height": 30, "pad_x": 10, "font_size": 10, "min_width": 82},
+    "md": {"height": 34, "pad_x": 11, "font_size": 10, "min_width": 96},
+    "lg": {"height": 40, "pad_x": 14, "font_size": 11, "min_width": 112},
 }
 
 
@@ -52,7 +52,7 @@ class IHButton(ttk.Frame):
         self.radius_override = radius
         self._size = SIZE_TOKENS[self.size]
         self._tokens = self._resolve_tokens()
-        self._font = (self._tokens["font"]["family"], self._size["font_size"], "normal")
+        self._font = (self._tokens["font"]["family"], self._size["font_size"], "bold")
         width = kwargs.pop("width", None)
         cursor = kwargs.pop("cursor", "hand2")
         takefocus = kwargs.pop("takefocus", True)
@@ -184,11 +184,11 @@ class IHButton(ttk.Frame):
             x1,
             y1,
         ]
-        self.canvas.create_polygon(points, smooth=True, splinesteps=18, **kwargs)
+        self.canvas.create_polygon(points, smooth=True, splinesteps=24, **kwargs)
 
     def _draw(self, _event=None) -> None:
         self._tokens = self._resolve_tokens()
-        self._font = (self._tokens["font"]["family"], self._size["font_size"], "normal")
+        self._font = (self._tokens["font"]["family"], self._size["font_size"], "bold")
         colors = self._tokens["color"]
         width = max(self.canvas.winfo_width(), self.min_width)
         height = max(self.canvas.winfo_height(), self._size["height"])

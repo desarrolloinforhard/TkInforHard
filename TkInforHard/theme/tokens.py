@@ -45,6 +45,17 @@ TOKENS = {
             "lg": radius.RADIUS_LG,
             "pill": radius.RADIUS_PILL,
         },
+        "navigation": {
+            "sidebar_bg": palette.DARK_SIDEBAR_BACKGROUND,
+            "item": palette.DARK_SIDEBAR_ITEM,
+            "item_hover": palette.DARK_SIDEBAR_ITEM_HOVER,
+            "item_active": palette.DARK_SIDEBAR_ITEM_ACTIVE,
+            "text": palette.DARK_SIDEBAR_TEXT,
+            "text_active": palette.DARK_SIDEBAR_TEXT_ACTIVE,
+            "muted": palette.DARK_SIDEBAR_MUTED,
+            "border": palette.DARK_SIDEBAR_BORDER,
+            "brand": palette.DARK_PRIMARY,
+        },
     },
     "inforhard_light": {
         "color": {
@@ -83,6 +94,17 @@ TOKENS = {
             "md": radius.RADIUS_MD,
             "lg": radius.RADIUS_LG,
             "pill": radius.RADIUS_PILL,
+        },
+        "navigation": {
+            "sidebar_bg": palette.LIGHT_SIDEBAR_BACKGROUND,
+            "item": palette.LIGHT_SIDEBAR_ITEM,
+            "item_hover": palette.LIGHT_SIDEBAR_ITEM_HOVER,
+            "item_active": palette.LIGHT_SIDEBAR_ITEM_ACTIVE,
+            "text": palette.LIGHT_SIDEBAR_TEXT,
+            "text_active": palette.LIGHT_SIDEBAR_TEXT_ACTIVE,
+            "muted": palette.LIGHT_SIDEBAR_MUTED,
+            "border": palette.LIGHT_SIDEBAR_BORDER,
+            "brand": palette.LIGHT_SIDEBAR_ITEM_ACTIVE,
         },
     },
 }

@@ -6,6 +6,9 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- `IHButton` adopta una ergonomia compacta inspirada en el sistema de referencia: `Segoe UI 10 bold`, alturas reducidas y canvas suavizado con `splinesteps=24`.
+- `IHMenuItem` pasa a ser un componente canvas propio para navegacion lateral, con dimensiones `158x46`, radio `14`, hover y estado activo.
+- Se agregan tokens de navegacion centralizados para sidebar light/dark.
 - Paleta base redefinida con verde Inforhard `#008A46`, variantes para hover y tokens especificos para modo claro/oscuro.
 - `IHButton` ahora usa Canvas internamente para garantizar bordes redondeados reales y estados visuales consistentes.
 - `IHIconButton` e `IHToggleButton` heredan el nuevo comportamiento canvas de `IHButton`.
