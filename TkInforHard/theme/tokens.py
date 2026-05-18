@@ -56,6 +56,16 @@ TOKENS = {
             "border": palette.DARK_SIDEBAR_BORDER,
             "brand": palette.DARK_PRIMARY,
         },
+        "input": {
+            "background": palette.DARK_INPUT_BACKGROUND,
+            "background_hover": palette.DARK_INPUT_BACKGROUND_HOVER,
+            "border": palette.DARK_INPUT_BORDER,
+            "border_hover": palette.DARK_INPUT_BORDER_HOVER,
+            "border_focus": palette.DARK_INPUT_BORDER_FOCUS,
+            "placeholder": palette.DARK_INPUT_PLACEHOLDER,
+            "error": palette.DARK_DANGER,
+            "disabled": palette.DARK_SURFACE_ALT,
+        },
     },
     "inforhard_light": {
         "color": {
@@ -105,6 +115,16 @@ TOKENS = {
             "muted": palette.LIGHT_SIDEBAR_MUTED,
             "border": palette.LIGHT_SIDEBAR_BORDER,
             "brand": palette.LIGHT_SIDEBAR_ITEM_ACTIVE,
+        },
+        "input": {
+            "background": palette.LIGHT_INPUT_BACKGROUND,
+            "background_hover": palette.LIGHT_INPUT_BACKGROUND_HOVER,
+            "border": palette.LIGHT_INPUT_BORDER,
+            "border_hover": palette.LIGHT_INPUT_BORDER_HOVER,
+            "border_focus": palette.LIGHT_INPUT_BORDER_FOCUS,
+            "placeholder": palette.LIGHT_INPUT_PLACEHOLDER,
+            "error": palette.DANGER,
+            "disabled": palette.LIGHT_SURFACE_ALT,
         },
     },
 }

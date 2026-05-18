@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- La familia de inputs pasa a superficies canvas redondeadas con estados visuales centralizados, placeholders y tokens light/dark propios.
 - `IHButton` adopta una ergonomia compacta inspirada en el sistema de referencia: `Segoe UI 10 bold`, alturas reducidas y canvas suavizado con `splinesteps=24`.
 - `IHMenuItem` pasa a ser un componente canvas propio para navegacion lateral, con dimensiones `158x46`, radio `14`, hover y estado activo.
 - Se agregan tokens de navegacion centralizados para sidebar light/dark.
