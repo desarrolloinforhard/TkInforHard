@@ -72,33 +72,29 @@ class IHCard(ttk.Frame):
         return get_tokens(self._resolve_theme_name())
 
     def _draw_rounded_rect(self, x1: int, y1: int, x2: int, y2: int, radius: int, **kwargs) -> None:
-        points = [
-            x1 + radius,
-            y1,
-            x2 - radius,
-            y1,
-            x2,
-            y1,
-            x2,
-            y1 + radius,
-            x2,
-            y2 - radius,
-            x2,
-            y2,
-            x2 - radius,
-            y2,
-            x1 + radius,
-            y2,
-            x1,
-            y2,
-            x1,
-            y2 - radius,
-            x1,
-            y1 + radius,
-            x1,
-            y1,
-        ]
-        self.canvas.create_polygon(points, smooth=True, splinesteps=24, **kwargs)
+        """Draw a strict rounded rectangle without spline overshoot artifacts."""
+
+        fill = kwargs.get("fill", "")
+        outline = kwargs.get("outline", "")
+        width = kwargs.get("width", 1)
+        diameter = radius * 2
+
+        self.canvas.create_rectangle(x1 + radius, y1, x2 - radius, y2, fill=fill, outline="")
+        self.canvas.create_rectangle(x1, y1 + radius, x2, y2 - radius, fill=fill, outline="")
+        self.canvas.create_arc(x1, y1, x1 + diameter, y1 + diameter, start=90, extent=90, style="pieslice", fill=fill, outline="")
+        self.canvas.create_arc(x2 - diameter, y1, x2, y1 + diameter, start=0, extent=90, style="pieslice", fill=fill, outline="")
+        self.canvas.create_arc(x2 - diameter, y2 - diameter, x2, y2, start=270, extent=90, style="pieslice", fill=fill, outline="")
+        self.canvas.create_arc(x1, y2 - diameter, x1 + diameter, y2, start=180, extent=90, style="pieslice", fill=fill, outline="")
+
+        if outline:
+            self.canvas.create_line(x1 + radius, y1, x2 - radius, y1, fill=outline, width=width)
+            self.canvas.create_line(x2, y1 + radius, x2, y2 - radius, fill=outline, width=width)
+            self.canvas.create_line(x1 + radius, y2, x2 - radius, y2, fill=outline, width=width)
+            self.canvas.create_line(x1, y1 + radius, x1, y2 - radius, fill=outline, width=width)
+            self.canvas.create_arc(x1, y1, x1 + diameter, y1 + diameter, start=90, extent=90, style="arc", outline=outline, width=width)
+            self.canvas.create_arc(x2 - diameter, y1, x2, y1 + diameter, start=0, extent=90, style="arc", outline=outline, width=width)
+            self.canvas.create_arc(x2 - diameter, y2 - diameter, x2, y2, start=270, extent=90, style="arc", outline=outline, width=width)
+            self.canvas.create_arc(x1, y2 - diameter, x1 + diameter, y2, start=180, extent=90, style="arc", outline=outline, width=width)
 
     def _draw(self, _event=None) -> None:
         self._tokens = self._resolve_tokens()
