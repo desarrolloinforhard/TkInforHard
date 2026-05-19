@@ -6,6 +6,7 @@ from TkInforHard.widgets import (
 )
 from TkInforHard.widgets.data.rounded_tableview import RoundedTableview
 from TkInforHard.theme.tokens import get_tokens
+from TkInforHard.utils.canvas import draw_rounded_rect
 import tkinter as tk
 
 
@@ -120,10 +121,44 @@ class ReportsView(IHPage):
             pagination_text_fg="#FFFFFF",
             pagination_radius=10,
         )
+        self._build_column_header()
         self.table.pack(fill="both", expand=True)
         self.table.view.configure(show="")
 
         self.bind("<<IHThemeChanged>>", self._on_theme_changed, add="+")
+
+    def _build_column_header(self):
+        tokens = get_tokens(self._theme_name())
+        fill = tokens["color"]["primary"]
+
+        self._col_header_canvas = tk.Canvas(self, highlightthickness=0, bd=0, bg=fill, height=32)
+        self._col_header_frame = tk.Frame(self._col_header_canvas, bg=fill)
+        win = self._col_header_canvas.create_window(0, 0, anchor="nw", window=self._col_header_frame)
+
+        for col in self.COLUMNAS:
+            anchor = col.get("anchor", "w")
+            lbl = tk.Label(
+                self._col_header_frame,
+                text=col["text"],
+                bg=fill,
+                fg="#FFFFFF",
+                font=("Segoe UI", 9, "bold"),
+                width=col["width"] // 7,
+                anchor=anchor,
+            )
+            lbl.pack(side="left", padx=2, pady=4)
+
+        def _on_resize(event):
+            cw, ch = event.width, event.height
+            if cw < 10 or ch < 10:
+                return
+            self._col_header_canvas.itemconfig(win, width=cw, height=ch)
+            self._col_header_canvas.delete("ch_rr")
+            draw_rounded_rect(self._col_header_canvas, 0, 0, cw, ch, 10, fill, "ch_rr")
+            self._col_header_canvas.tag_lower("ch_rr")
+
+        self._col_header_canvas.bind("<Configure>", _on_resize)
+        self._col_header_canvas.pack(fill="x", pady=(0, 2))
 
     def _simular_carga(self):
         """Simula una carga de 2 segundos y carga datos de ejemplo."""
@@ -172,6 +207,17 @@ class ReportsView(IHPage):
         header_fill = tokens["color"]["primary"]
         bg = self._get_bg()
         self.table.apply_theme(fill=header_fill, outer_bg=bg, fg="#FFFFFF")
+        cur_fill = header_fill
+        if self._col_header_canvas:
+            w = self._col_header_canvas.winfo_width()
+            h = self._col_header_canvas.winfo_height()
+            self._col_header_canvas.delete("ch_rr")
+            draw_rounded_rect(self._col_header_canvas, 0, 0, w, h, 10, cur_fill, "ch_rr")
+            self._col_header_canvas.tag_lower("ch_rr")
+            self._col_header_canvas.configure(bg=cur_fill)
+            self._col_header_frame.configure(bg=cur_fill)
+            for w_ in self._col_header_frame.winfo_children():
+                w_.configure(bg=cur_fill)
 
     def _theme_name(self) -> str:
         try:

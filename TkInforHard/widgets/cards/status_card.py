@@ -61,7 +61,7 @@ class IHStatusCard(ttk.Frame):
 
         super().__init__(master, style="IH.Surface.TFrame", **kwargs)
 
-        self.canvas = tk.Canvas(self, highlightthickness=0, bd=0)
+        self.canvas = tk.Canvas(self, highlightthickness=0, bd=0, bg=bg)
         self.canvas.pack(fill="both", expand=True)
 
         self._inner = tk.Frame(self.canvas, bg=bg)
@@ -102,6 +102,10 @@ class IHStatusCard(ttk.Frame):
         self._lbl_detail.pack(anchor="w", padx=16, pady=(0, 14))
 
         self.canvas.bind("<Configure>", self._on_configure)
+        self.after(50, lambda: self._redraw(
+            self.canvas.winfo_width() or 200,
+            self.canvas.winfo_height() or 120,
+        ))
         self.bind("<<IHThemeChanged>>", self._on_theme_changed, add="+")
 
     # ── Public ────────────────────────────────────────────────────────────────

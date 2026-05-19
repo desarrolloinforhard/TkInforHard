@@ -82,14 +82,20 @@ class IHFilterBar(ttk.Frame):
             label = field.get("label", "")
 
             if ftype == "date":
-                var = tk.StringVar()
-                self._vars[key] = var
-                container = ttk.Frame(self, style="IH.Surface.TFrame")
-                container.pack(side="left", padx=(0, 8))
-                ttk.Label(container, text=label, style="IH.Surface.TLabel").pack(anchor="w")
-                widget = IHDateInput(container, label=None, variable=var)
-                widget.pack()
-                self._widgets[key] = widget
+                from ttkbootstrap.widgets import DateEntry
+                from datetime import datetime
+                if label:
+                    ttk.Label(self, text=label + ":").pack(side="left", padx=(8, 2))
+                entry = DateEntry(
+                    self,
+                    dateformat="%Y-%m-%d",
+                    firstweekday=0,
+                    startdate=datetime.today(),
+                    bootstyle="success",
+                    width=10,
+                )
+                entry.pack(side="left", padx=(0, 4))
+                self._widgets[key] = entry
 
             elif ftype == "combo":
                 var = tk.StringVar()
@@ -125,7 +131,18 @@ class IHFilterBar(ttk.Frame):
     def get_values(self) -> dict:
         """Return current values for all date and combo fields."""
 
-        return {key: var.get() for key, var in self._vars.items()}
+        values = {}
+        for key, widget in self._widgets.items():
+            if isinstance(widget, IHButton):
+                continue
+            if hasattr(widget, "entry"):
+                values[key] = widget.entry.get()
+            else:
+                try:
+                    values[key] = widget.get()
+                except Exception:
+                    pass
+        return values
 
     def set_state(self, key: str, state: str) -> None:
         """Set the state of a button or input by key."""
