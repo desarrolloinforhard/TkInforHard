@@ -33,6 +33,7 @@ class IHDrawerMenu(ttk.Frame):
         self.animation_delay = animation_delay
         self._is_open = False
         self._animating = False
+        self._animation_job = None
         self._items: list[IHMenuItem] = []
         self.pack_propagate(False)
 
@@ -92,6 +93,7 @@ class IHDrawerMenu(ttk.Frame):
         """Open the drawer with a sliding animation."""
 
         self._is_open = True
+        self.lift()
         self._animate_to(self._open_x())
 
     def close(self) -> None:
@@ -128,6 +130,12 @@ class IHDrawerMenu(ttk.Frame):
         return max(self.master.winfo_width(), 0)
 
     def _animate_to(self, target_x: int) -> None:
+        if self._animation_job is not None:
+            self.after_cancel(self._animation_job)
+            self._animation_job = None
+        self._step_animation(target_x)
+
+    def _step_animation(self, target_x: int) -> None:
         current_x = self.winfo_x()
         if current_x == target_x:
             self._animating = False
@@ -138,7 +146,7 @@ class IHDrawerMenu(ttk.Frame):
         if (direction > 0 and next_x > target_x) or (direction < 0 and next_x < target_x):
             next_x = target_x
         self.place_configure(x=next_x)
-        self.after(self.animation_delay, lambda: self._animate_to(target_x))
+        self._animation_job = self.after(self.animation_delay, lambda: self._step_animation(target_x))
 
     def _on_parent_configure(self, _event=None) -> None:
         if self._animating:
