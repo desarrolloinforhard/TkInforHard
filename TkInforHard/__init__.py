@@ -7,6 +7,7 @@ ttkbootstrap for Inforhard internal applications.
 from TkInforHard.core.app import IHApplication
 from TkInforHard.core.config import IHConfig
 from TkInforHard.theme.manager import ThemeManager
+from TkInforHard.utils import draw_rounded_rect
 from TkInforHard.widgets import *
 from TkInforHard.layout import *
 
