@@ -95,12 +95,17 @@ class IHDrawerMenu(ttk.Frame):
         self._is_open = True
         self.lift()
         self._animate_to(self._open_x())
+        self.master.bind("<Button-1>", self._on_outside_click, add="+")
 
     def close(self) -> None:
         """Close the drawer with a sliding animation."""
 
         self._is_open = False
         self._animate_to(self._closed_x())
+        try:
+            self.master.unbind("<Button-1>")
+        except Exception:
+            pass
 
     def toggle(self) -> None:
         """Toggle drawer visibility."""
@@ -147,6 +152,17 @@ class IHDrawerMenu(ttk.Frame):
             next_x = target_x
         self.place_configure(x=next_x)
         self._animation_job = self.after(self.animation_delay, lambda: self._step_animation(target_x))
+
+    def _on_outside_click(self, event) -> None:
+        """Cerrá el drawer si el click fue fuera de su área."""
+        if not self._is_open:
+            return
+        dx = self.winfo_rootx()
+        dy = self.winfo_rooty()
+        dw = self.winfo_width()
+        dh = self.winfo_height()
+        if not (dx <= event.x_root < dx + dw and dy <= event.y_root < dy + dh):
+            self.close()
 
     def _on_parent_configure(self, _event=None) -> None:
         if self._animating:
