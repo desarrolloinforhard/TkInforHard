@@ -132,6 +132,39 @@ Parametros adicionales:
 IHInfoCard(title="Operacion", body="Resumen compacto")
 ```
 
+### `IHStatusCard`
+
+Card de estado para reportes, semaforos y metricas agrupadas.
+
+Parametros:
+
+| Parametro | Tipo | Default |
+| --- | --- | --- |
+| `title` | `str` | `""` |
+| `count` | `str` | `""` |
+| `detail` | `str` | `""` |
+| `bg` | `str` | `"#1C2721"` |
+| `fg` | `str` | `"#E8F1EC"` |
+| `muted` | `str` | `"#AAB8B0"` |
+| `radius` | `int` | `12` |
+| `icon` | image | `None` |
+| `on_theme_change` | callable | `None` |
+
+Metodos:
+
+- `update(count, detail)`
+- `set_colors(bg, fg, muted)`
+
+```python
+IHStatusCard(
+    title="Aprobados",
+    count="80",
+    detail="transacciones - $240,983.26",
+    bg="#0D3320",
+    fg="#22C55E",
+)
+```
+
 ## Inputs
 
 ### `IHInput`
@@ -312,10 +345,14 @@ Parametros:
 | --- | --- | --- |
 | `columns` | iterable | `()` |
 | `rows` | `list[tuple] | None` | `None` |
+| `row_tag_key` | `str | None` | `None` |
 
 Metodos:
 
 - `load(rows)`
+- `set_tag_color(tag, background, fg=None)`
+
+Soporta tags default `green`, `yellow` y `red`.
 
 ### `IHFilterBar`
 
@@ -327,6 +364,40 @@ Parametros:
 | --- | --- | --- |
 | `on_search` | callable | `None` |
 | `on_refresh` | callable | `None` |
+| `fields` | `list[dict] | None` | `None` |
+
+Modo declarativo:
+
+```python
+IHFilterBar(fields=[
+    {"type": "date", "key": "desde", "label": "Desde"},
+    {"type": "combo", "key": "estado", "label": "Estado", "values": ["(Todos)"]},
+    {"type": "button", "key": "generar", "label": "Generar", "variant": "primary"},
+])
+```
+
+Metodos:
+
+- `get_values()`
+- `set_state(key, state)`
+- `update_combo(key, values)`
+
+### `RoundedTableview`
+
+Tabla extendida desde `ttkbootstrap.tableview.Tableview` con paginacion redondeada.
+
+Parametros extra:
+
+| Parametro | Tipo | Default |
+| --- | --- | --- |
+| `pagination_fill` | `str` | `"#dbeafe"` |
+| `pagination_outer_bg` | `str | None` | `None` |
+| `pagination_text_fg` | `str` | `"#1a202c"` |
+| `pagination_radius` | `int` | `8` |
+
+Metodo:
+
+- `apply_theme(fill, outer_bg=None, fg=None)`
 
 ### `IHPagination`
 
@@ -403,10 +474,15 @@ Parametros:
 | `label` | `str | None` | `None` |
 | `value` | `int` | `0` |
 | `maximum` | `int` | `100` |
+| `mode` | `str` | `"determinate"` |
 
 Metodos:
 
 - `set(value)`
+- `start(interval=10)`
+- `stop()`
+
+`mode="indeterminate"` se usa para loaders animados.
 
 ## Display
 

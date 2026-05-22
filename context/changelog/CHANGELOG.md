@@ -6,6 +6,7 @@ Formato basado en versionado semantico.
 
 ### Changed
 
+- Se actualiza `context/` para documentar `IHStatusCard`, `RoundedTableview`, modo declarativo de `IHFilterBar`, tags de `IHTable`, modo indeterminado de `IHProgress` y la demo de reportes.
 - La demo principal reemplaza la sidebar fija por `IHDrawerMenu` como navegacion real y corrige el cierre del drawer al cancelar animaciones previas.
 - La vista `Navigation` demuestra el `IHDrawerMenu` como menu lateral izquierdo con control de mostrar/ocultar.
 - La demo incorpora una vista `Navigation` y se formaliza la regla de showcase obligatorio para cada componente nuevo.
