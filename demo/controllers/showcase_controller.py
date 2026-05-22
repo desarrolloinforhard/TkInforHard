@@ -5,9 +5,11 @@ try:
 except Exception:  # pragma: no cover
     from tkinter import ttk  # type: ignore
 
+from TkInforHard.layout import IHRenderHost
 from demo.views.buttons_view import ButtonsView
 from demo.views.cards_view import CardsView
 from demo.views.feedback_view import FeedbackView
+from demo.views.icons_view import IconsView
 from demo.views.inputs_view import InputsView
 from demo.views.navigation_view import NavigationView
 from demo.views.reports_view import ReportsView
@@ -19,14 +21,13 @@ class ShowcaseController:
     """Coordinates view navigation for the demo without defining UI components."""
 
     def __init__(self, master):
-        self.content = ttk.Frame(master, style="IH.TFrame")
-        self.content.columnconfigure(0, weight=1)
-        self.content.rowconfigure(0, weight=1)
+        self.content = IHRenderHost(master, loading_text="Cargando modulo...")
         self.views = {
             "showcase": ShowcaseView,
             "buttons": ButtonsView,
             "cards": CardsView,
             "inputs": InputsView,
+            "icons": IconsView,
             "navigation": NavigationView,
             "tables": TablesView,
             "feedback": FeedbackView,
@@ -42,6 +43,7 @@ class ShowcaseController:
             ("Buttons", lambda: self.show("buttons")),
             ("Cards", lambda: self.show("cards")),
             ("Inputs", lambda: self.show("inputs")),
+            ("Iconos", lambda: self.show("icons")),
             ("Navigation", lambda: self.show("navigation")),
             ("Tables", lambda: self.show("tables")),
             ("Feedback", lambda: self.show("feedback")),
@@ -51,7 +53,8 @@ class ShowcaseController:
     def show(self, view_name: str) -> None:
         """Render the selected view."""
 
-        if self.current is not None:
-            self.current.destroy()
-        self.current = self.views[view_name](self.content)
-        self.current.grid(row=0, column=0, sticky="nsew")
+        view_class = self.views[view_name]
+        self.content.show(view_class, on_ready=self._set_current)
+
+    def _set_current(self, view) -> None:
+        self.current = view

@@ -3,6 +3,7 @@
 Componentes:
 
 - `IHTable`
+- `IHImageGridTable`
 - `IHFilterBar`
 - `IHPagination`
 - `IHEmptyState`
@@ -42,6 +43,79 @@ Tags default:
 - `green`
 - `yellow`
 - `red`
+
+## IHImageGridTable
+
+`IHImageGridTable` es una tabla visual paginada para imagenes, iconos, miniaturas, productos, adjuntos o cualquier dataset donde el primer contacto del usuario debe ser visual y no textual.
+
+Usar cuando:
+
+- Hay que mostrar muchos iconos o miniaturas.
+- La UI debe parecer una galeria o browser visual.
+- Crear muchos botones/widgets causa parpadeo o render progresivo visible.
+- Se necesita paginacion y seleccion de items.
+
+No usar cuando:
+
+- El dato principal es texto tabular.
+- Se necesitan columnas, ordenamiento textual o celdas editables. Para eso usar `IHTable` o `ttkbootstrap.tableview.Tableview`.
+
+API principal:
+
+```python
+IHImageGridTable(
+    master,
+    items=data,
+    rows=8,
+    columns=10,
+    cell_size=50,
+    image_factory=make_image,
+    image_key_getter=lambda item: item["id"],
+    label_getter=lambda item: item["name"],
+    on_select=handle_select,
+    show_labels=False,
+    renderer="canvas",
+    cache_images=True,
+)
+```
+
+Argumentos importantes:
+
+- `items`: lista de datos fuente.
+- `rows` y `columns`: tamano de pagina. El componente limita por defecto hasta 10x10.
+- `image_factory(item, size=None)`: callback que devuelve `PhotoImage` para cada item.
+- `image_key_getter(item)`: clave estable para cachear imagenes. Debe incluir todo lo que cambie el render, por ejemplo provider, estilo, nombre, tamano y color.
+- `label_getter(item)`: texto opcional si `show_labels=True`.
+- `on_select(item)`: callback al seleccionar.
+- `renderer="canvas"`: modo recomendado para muchos items. Reutiliza celdas en Canvas.
+- `cache_images=True`: evita regenerar imagenes al volver a una pagina.
+
+Ejemplo:
+
+```python
+def make_swatch(item, size=None):
+    image_size = int(size or 48)
+    image = tk.PhotoImage(width=image_size, height=image_size)
+    image.put(item["color"], to=(0, 0, image_size, image_size))
+    return image
+
+grid = IHImageGridTable(
+    parent,
+    items=colors,
+    rows=2,
+    columns=5,
+    image_factory=make_swatch,
+    image_key_getter=lambda item: item["name"],
+    on_select=lambda item: print(item["name"]),
+    renderer="canvas",
+)
+```
+
+Notas de diseno:
+
+- Los tiles no deben verse como botones pesados. Deben parecer celdas visuales: fondo suave, hover sutil y borde de seleccion claro.
+- En dark mode, el color de los iconos de la grilla debe priorizar legibilidad. El color elegido por el usuario puede aplicarse al preview, no necesariamente a toda la grilla.
+- Mantener el nombre y los detalles en un panel lateral o inferior, no debajo de cada icono salvo que el dataset lo requiera.
 
 ## IHFilterBar
 

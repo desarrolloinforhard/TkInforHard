@@ -2,7 +2,7 @@
 
 from TkInforHard.widgets.buttons import IHButton, IHIconButton, IHToggleButton
 from TkInforHard.widgets.cards import IHCard, IHInfoCard, IHMetricCard, IHStatusCard
-from TkInforHard.widgets.data import IHEmptyState, IHFilterBar, IHPagination, IHTable, RoundedTableview
+from TkInforHard.widgets.data import IHEmptyState, IHFilterBar, IHImageGridTable, IHPagination, IHTable, RoundedTableview
 from TkInforHard.widgets.display import IHBadge, IHDivider, IHLogo, IHSectionHeader
 from TkInforHard.widgets.feedback import IHAlert, IHLoading, IHProgress, IHToast
 from TkInforHard.widgets.inputs import IHCombobox, IHDateInput, IHInput, IHSearchInput, IHTextArea
@@ -31,6 +31,7 @@ __all__ = [
     "IHBreadcrumb",
     "IHDrawerMenu",
     "IHTable",
+    "IHImageGridTable",
     "IHFilterBar",
     "IHPagination",
     "IHEmptyState",

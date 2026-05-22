@@ -21,6 +21,10 @@ Formato basado en versionado semantico.
 - `IHButton` ahora usa Canvas internamente para garantizar bordes redondeados reales y estados visuales consistentes.
 - `IHIconButton` e `IHToggleButton` heredan el nuevo comportamiento canvas de `IHButton`.
 - `ThemeManager` tolera fallos internos de reconstruccion de themes de `ttkbootstrap` y mantiene tokens/estilos propios activos.
+- Se agrega demo `Iconos` para explorar providers `mat`, `gmi` y `fa` de `ttkbootstrap-icons`.
+- Se agrega `IHImageGridTable` para grillas paginadas de imagenes/iconos con renderer canvas, cache y celdas reutilizables.
+- Se agrega `IHRenderHost` para renderizar pantallas detras de un loader antes de hacer swap visual.
+- Se documentan patrones de rendering para evitar que Tkinter muestre frames parcialmente construidos.
 
 ## [1.0.0]
 

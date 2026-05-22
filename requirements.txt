@@ -1,3 +1,6 @@
 ttkbootstrap>=1.10.1
+ttkbootstrap-icons>=4.0.0
+ttkbootstrap-icons-mat>=1.0.0
+ttkbootstrap-icons-gmi>=1.0.1
+ttkbootstrap-icons-fa>=1.0.2
 Pillow>=10.0.0
-
