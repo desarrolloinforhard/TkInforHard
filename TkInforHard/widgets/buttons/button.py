@@ -143,7 +143,12 @@ class IHButton(ttk.Frame):
         if self.button_state == "disabled":
             return colors["surface_alt"], colors["border"], colors["muted"]
         if self.outline:
-            fill = colors["surface_alt"] if self.hovered or self.pressed else surface
+            if self.variant == "topbar_button":
+                base = colors.get("topbar", surface)
+                hover = colors.get("primary_hover", base)
+                fill = hover if self.hovered or self.pressed else base
+            else:
+                fill = colors["surface_alt"] if self.hovered or self.pressed else surface
             return fill, variant_color, variant_color
         fill = colors["primary_hover"] if self.hovered or self.pressed else variant_color
         return fill, fill, "#ffffff"
@@ -196,7 +201,8 @@ class IHButton(ttk.Frame):
         fill, border, text_color = self._visual_colors()
         offset = 1 if self.pressed else 0
         self.canvas.delete("all")
-        self.canvas.configure(background=colors["surface"])
+        canvas_bg = colors.get("topbar", colors["surface"]) if self.variant == "topbar_button" else colors["surface"]
+        self.canvas.configure(background=canvas_bg)
         self._draw_rounded_rect(
             1,
             1 + offset,

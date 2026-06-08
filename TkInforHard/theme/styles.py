@@ -21,7 +21,7 @@ def register_styles(style, theme_name: str) -> None:
     style.configure("IH.Surface.TFrame", background=color["surface"])
     style.configure("IH.Card.TFrame", background=color["surface"], relief="flat", borderwidth=1)
     style.configure("IH.Sidebar.TFrame", background=navigation["sidebar_bg"])
-    style.configure("IH.Topbar.TFrame", background=color["surface"])
+    style.configure("IH.Topbar.TFrame", background=color.get("topbar", color["surface"]))
 
     style.configure("IH.TLabel", background=color["background"], foreground=color["text"], font=body_font)
     style.configure("IH.Surface.TLabel", background=color["surface"], foreground=color["text"], font=body_font)

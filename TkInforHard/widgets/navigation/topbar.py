@@ -14,7 +14,8 @@ class IHTopbar(ttk.Frame):
     def __init__(self, master=None, title: str = "", on_toggle_theme=None, on_toggle_menu=None, **kwargs):
         super().__init__(master, padding=(18, 12), style="IH.Topbar.TFrame", **kwargs)
         if on_toggle_menu:
-            IHButton(self, text="Menu", variant="success", outline=True, command=on_toggle_menu).pack(side="left", padx=(0, 12))
-        ttk.Label(self, text=title, style="IH.CardTitle.TLabel").pack(side="left")
+            IHButton(self, text="Menu", variant="topbar_button", outline=True, command=on_toggle_menu).pack(side="left", padx=(0, 12))
+        if title:
+            ttk.Label(self, text=title, style="IH.CardTitle.TLabel").pack(side="left")
         if on_toggle_theme:
-            IHButton(self, text="Tema", variant="success", outline=True, command=on_toggle_theme).pack(side="right")
+            IHButton(self, text="Tema", variant="topbar_button", outline=True, command=on_toggle_theme).pack(side="right")

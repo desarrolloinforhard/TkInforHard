@@ -34,6 +34,7 @@ class IHCard(ttk.Frame):
         interactive: bool = False,
         command=None,
         selected: bool = False,
+        fill_content: bool = False,
         **kwargs,
     ):
         self.title_text = title
@@ -43,6 +44,7 @@ class IHCard(ttk.Frame):
         self.interactive = interactive or command is not None
         self.command = command
         self.selected = selected
+        self.fill_content = fill_content
         self.hovered = False
         self.pressed = False
         self.hover_progress = 0.0
@@ -145,13 +147,14 @@ class IHCard(ttk.Frame):
         self._card_image = self._render_card_image(width, height, background, border, card["shadow"], inset)
         self.canvas.create_image(0, 0, anchor="nw", image=self._card_image)
         content_padding = self.padding + inset
-        self.window_id = self.canvas.create_window(
-            content_padding,
-            content_padding,
+        window_kw: dict = dict(
             anchor="nw",
             window=self.content,
             width=max(width - content_padding * 2 - 2, 20),
         )
+        if self.fill_content:
+            window_kw["height"] = max(height - content_padding * 2 - 2, 20)
+        self.window_id = self.canvas.create_window(content_padding, content_padding, **window_kw)
         self._apply_content_colors(background)
 
     def _on_enter(self, _event=None) -> None:

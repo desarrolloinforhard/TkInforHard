@@ -22,6 +22,8 @@ TOKENS = {
             "info": palette.INFO,
             "warning": palette.DARK_WARNING,
             "danger": palette.DARK_DANGER,
+            "topbar_button": palette.DARK_PRIMARY,
+            "topbar": palette.DARK_SURFACE,
         },
         "font": {
             "family": typography.FONT_FAMILY,
@@ -88,6 +90,8 @@ TOKENS = {
             "info": palette.INFO,
             "warning": palette.WARNING,
             "danger": palette.DANGER,
+            "topbar_button": "#000000",
+            "topbar": palette.LIGHT_TOPBAR,
         },
         "font": {
             "family": typography.FONT_FAMILY,
