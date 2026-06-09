@@ -1,8 +1,14 @@
-# Changelog
+﻿# Changelog
 
 Formato basado en versionado semantico.
 
 ## [Unreleased]
+
+### Changed
+
+- Sin cambios pendientes.
+
+## [1.1.0] - 2026-05-26
 
 ### Changed
 
@@ -25,6 +31,15 @@ Formato basado en versionado semantico.
 - Se agrega `IHImageGridTable` para grillas paginadas de imagenes/iconos con renderer canvas, cache y celdas reutilizables.
 - Se agrega `IHRenderHost` para renderizar pantallas detras de un loader antes de hacer swap visual.
 - Se documentan patrones de rendering para evitar que Tkinter muestre frames parcialmente construidos.
+- Se amplian las cards con seleccion, variantes semanticas, metric cards enriquecidas e `IHCardGrid`.
+- Se agrega `IHAnimator` y transiciones suaves en `IHCard` para hover/pressed tipo CSS.
+- `IHRenderHost` incorpora duracion minima de loader, delay de render y cache de vistas para transiciones de modulo mas suaves.
+- Se agrega `IHLoader`, loader corporativo circular Canvas con iniciales IH, y demo standalone `demo/demo_ih_loader.py`.
+- `IHLoader` vuelve a Canvas puro, asegura letras IH visibles con `tag_raise`, mayor tamano en `IHRenderHost` y fondo unificado.
+- `IHLoader` agrega render suavizado en memoria con Pillow cuando esta disponible, sin GIF ni archivos externos, para mejorar definicion en Windows.
+- `IHRenderHost` agrega `min_loader_cycles`, `settle_delay` y coordinacion con `IHLoader.revolution_ms()` para completar al menos una vuelta antes de construir/swapear modulos pesados.
+- `IHRenderHost` soporta preparacion asincronica con `prepare_for_render(on_done, on_error)`, callback `prepare`, `on_error`, timeout y token interno para ignorar resultados de navegaciones viejas.
+- Se agrega `IHBusyOverlay` para procesos largos dentro de una pantalla, con `IHLoader`, thread daemon, callbacks en hilo UI, minimo visible y bloqueo visual opcional.
 
 ## [1.0.0]
 
@@ -49,3 +64,4 @@ Formato basado en versionado semantico.
 ### Removed
 
 - No aplica en la version inicial.
+

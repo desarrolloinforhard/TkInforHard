@@ -1,4 +1,4 @@
-"""Canvas-backed rounded button component."""
+﻿"""Canvas-backed rounded button component."""
 
 from __future__ import annotations
 
@@ -94,7 +94,8 @@ class IHButton(ttk.Frame):
         if "outline" in kwargs:
             self.outline = kwargs.pop("outline")
         result = super().configure(cnf, **kwargs)
-        self._draw()
+        if hasattr(self, "canvas"):
+            self._draw()
         return result
 
     config = configure
@@ -247,3 +248,4 @@ class IHButton(ttk.Frame):
 
     def _on_theme_changed(self, _event=None) -> None:
         self._draw()
+

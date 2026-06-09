@@ -21,7 +21,15 @@ class ShowcaseController:
     """Coordinates view navigation for the demo without defining UI components."""
 
     def __init__(self, master):
-        self.content = IHRenderHost(master, loading_text="Cargando modulo...")
+        self.content = IHRenderHost(
+            master,
+            loading_text="Cargando modulo...",
+            render_delay=140,
+            min_loader_ms=1300,
+            min_loader_cycles=1,
+            settle_delay=120,
+            cache_views=True,
+        )
         self.views = {
             "showcase": ShowcaseView,
             "buttons": ButtonsView,
@@ -54,7 +62,7 @@ class ShowcaseController:
         """Render the selected view."""
 
         view_class = self.views[view_name]
-        self.content.show(view_class, on_ready=self._set_current)
+        self.content.show(view_class, on_ready=self._set_current, cache_key=view_name)
 
     def _set_current(self, view) -> None:
         self.current = view

@@ -1,9 +1,6 @@
 """Metric card component."""
 
-try:
-    import ttkbootstrap as ttk
-except Exception:  # pragma: no cover
-    from tkinter import ttk  # type: ignore
+import tkinter as tk
 
 from TkInforHard.widgets.cards.card import IHCard
 
@@ -17,11 +14,27 @@ class IHMetricCard(IHCard):
         title: str = "",
         value: str = "",
         delta: str | None = None,
+        delta_variant: str = "default",
+        badge: str | None = None,
+        helper: str | None = None,
+        icon: str | None = None,
         variant: str = "default",
         **kwargs,
     ):
         super().__init__(master, padding=18, variant=variant, **kwargs)
-        ttk.Label(self.content, text=title, style="IH.CardMuted.TLabel").pack(anchor="w")
-        ttk.Label(self.content, text=value, style="IH.CardTitle.TLabel").pack(anchor="w", pady=(7, 0))
+        header = tk.Frame(self.content, bd=0, highlightthickness=0)
+        header.pack(fill="x")
+        self._bind_card_events(header)
+        title_text = f"{icon}  {title}" if icon else title
+        self._label(title_text, role="muted", parent=header).pack(side="left", anchor="w")
+        if badge:
+            self._label(badge, role="muted", parent=header).pack(side="right", anchor="e")
+        self._label(value, role="title").pack(anchor="w", pady=(7, 0))
         if delta:
-            ttk.Label(self.content, text=delta, style="IH.CardMuted.TLabel").pack(anchor="w", pady=(5, 0))
+            prefix = {"success": "+", "danger": "-", "warning": "!", "info": "i"}.get(delta_variant, "")
+            delta_text = f"{prefix} {delta}" if prefix and not delta.startswith(prefix) else delta
+            self._label(delta_text, role="muted").pack(anchor="w", pady=(5, 0))
+        if helper:
+            self._label(helper, role="muted", wraplength=280).pack(
+                anchor="w", pady=(5, 0)
+            )

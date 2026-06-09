@@ -1,8 +1,8 @@
-"""Public widget exports for TkInforHard."""
+﻿"""Public widget exports for TkInforHard."""
 
 from TkInforHard.widgets.buttons import IHButton, IHIconButton, IHToggleButton
-from TkInforHard.widgets.cards import IHCard, IHInfoCard, IHMetricCard, IHStatusCard
-from TkInforHard.widgets.data import IHEmptyState, IHFilterBar, IHImageGridTable, IHPagination, IHTable, RoundedTableview
+from TkInforHard.widgets.cards import IHCard, IHCardGrid, IHInfoCard, IHMetricCard, IHStatusCard
+from TkInforHard.widgets.data import IHChatConversation, IHEmptyState, IHFilterBar, IHImageGridTable, IHKanbanBoard, IHPagination, IHTable, IHTimeline, RoundedTableview
 from TkInforHard.widgets.display import IHBadge, IHDivider, IHLogo, IHSectionHeader
 from TkInforHard.widgets.feedback import IHAlert, IHLoading, IHProgress, IHToast
 from TkInforHard.widgets.inputs import IHCombobox, IHDateInput, IHInput, IHSearchInput, IHTextArea
@@ -13,6 +13,7 @@ __all__ = [
     "IHIconButton",
     "IHToggleButton",
     "IHCard",
+    "IHCardGrid",
     "IHMetricCard",
     "IHInfoCard",
     "IHStatusCard",
@@ -36,8 +37,12 @@ __all__ = [
     "IHPagination",
     "IHEmptyState",
     "RoundedTableview",
+    "IHTimeline",
+    "IHKanbanBoard",
+    "IHChatConversation",
     "IHBadge",
     "IHSectionHeader",
     "IHDivider",
     "IHLogo",
 ]
+
