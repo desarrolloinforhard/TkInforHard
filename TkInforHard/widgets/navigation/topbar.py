@@ -16,6 +16,6 @@ class IHTopbar(ttk.Frame):
         if on_toggle_menu:
             IHButton(self, text="Menu", variant="topbar_button", outline=True, command=on_toggle_menu).pack(side="left", padx=(0, 12))
         if title:
-            ttk.Label(self, text=title, style="IH.CardTitle.TLabel").pack(side="left")
+            ttk.Label(self, text=title, style="IH.TopbarTitle.TLabel").pack(side="left")
         if on_toggle_theme:
             IHButton(self, text="Tema", variant="topbar_button", outline=True, command=on_toggle_theme).pack(side="right")

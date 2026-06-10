@@ -29,12 +29,24 @@ def register_styles(style, theme_name: str) -> None:
     style.configure("IH.Muted.TLabel", background=color["background"], foreground=color["muted"], font=small_font)
     style.configure("IH.CardTitle.TLabel", background=color["surface"], foreground=color["text"], font=title_font)
     style.configure("IH.CardMuted.TLabel", background=color["surface"], foreground=color["muted"], font=small_font)
+    style.configure("IH.TopbarTitle.TLabel", background=color.get("topbar", color["surface"]), foreground=color["text"], font=body_font)
     style.configure("IH.SidebarTitle.TLabel", background=navigation["sidebar_bg"], foreground=navigation["brand"], font=title_font)
 
     style.configure("IH.TEntry", fieldbackground=color["surface_alt"], foreground=color["text"])
     style.configure("IH.TCombobox", fieldbackground=color["surface_alt"], foreground=color["text"])
     style.configure("IH.Treeview", rowheight=34, font=body_font)
     style.configure("IH.Treeview.Heading", font=(font["family"], font["body"], font["bold"]))
+    style.map(
+        "IH.Treeview",
+        background=[
+            ("selected", "!focus", navigation["item_hover"]),
+            ("selected", navigation["item_hover"]),
+        ],
+        foreground=[
+            ("selected", "!focus", color["text"]),
+            ("selected", color["text"]),
+        ],
+    )
 
     for variant in ("primary", "secondary", "success", "info", "warning", "danger", "light", "dark"):
         style.configure(f"IH.{variant}.TButton", padding=(14, 9), font=body_font)
