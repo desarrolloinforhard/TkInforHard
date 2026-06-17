@@ -53,7 +53,7 @@ class IHCard(ttk.Frame):
         super().__init__(master, style="IH.Surface.TFrame", **kwargs)
         self._hover_animator = IHAnimator(self, duration=140, easing="ease_out")
         self._press_animator = IHAnimator(self, duration=90, easing="ease_out")
-        self.canvas = tk.Canvas(self, highlightthickness=0, bd=0, height=1)
+        self.canvas = tk.Canvas(self, highlightthickness=0, bd=0)
         self.canvas.pack(fill="both", expand=True)
         self.content = tk.Frame(self.canvas, bd=0, highlightthickness=0)
         self.window_id = self.canvas.create_window(padding, padding, anchor="nw", window=self.content)
@@ -62,8 +62,6 @@ class IHCard(ttk.Frame):
         self.canvas.bind("<Leave>", self._on_leave)
         self.canvas.bind("<Button-1>", self._on_click)
         self._bind_card_events(self.content)
-        self.content.bind("<Configure>", self._on_content_configure, add="+")
-        self.bind("<Map>", self._on_map, add="+")
         self.bind("<<IHThemeChanged>>", self._on_theme_changed, add="+")
         if title:
             self._label(title, role="title").pack(anchor="w")
@@ -182,19 +180,6 @@ class IHCard(ttk.Frame):
             self._press_animator.animate_to(0.0, self._set_press_progress, on_done=self._clear_pressed)
         if self.command:
             self.command()
-
-    def _on_content_configure(self, event) -> None:
-        if event.height < 4:
-            return
-        needed = event.height + self.padding * 2 + 4
-        if self.canvas.winfo_reqheight() != needed:
-            self.canvas.configure(height=needed)
-
-    def _on_map(self, _event=None) -> None:
-        self.update_idletasks()
-        h = self.content.winfo_reqheight()
-        if h > 0:
-            self.canvas.configure(height=h + self.padding * 2 + 4)
 
     def _on_theme_changed(self, _event=None) -> None:
         self._draw()
