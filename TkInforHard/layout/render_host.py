@@ -293,7 +293,7 @@ class IHRenderHost(ttk.Frame):
             tokens = self.winfo_toplevel().theme_manager.tokens()
             return tokens["color"]["background"]
         except Exception:
-            return "#F5F7F6" if self._theme_mode() == "light" else "#15191D"
+            return "#F5F7F6" if self._theme_mode() == "light" else "#000000"
 
     def _text_color(self) -> str:
         try:

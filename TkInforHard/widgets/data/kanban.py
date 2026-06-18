@@ -53,10 +53,11 @@ class IHKanbanBoard(ttk.Frame):
         if not self.columns:
             IHEmptyState(self, title="Sin columnas", message="Configure columnas para mostrar el tablero.").pack(fill="x")
             return
+        self.rowconfigure(0, weight=1)
         for index, column in enumerate(self.columns):
             self.columnconfigure(index, weight=1, uniform="kanban")
-            wrapper = ttk.Frame(self, style="IH.Card.TFrame", padding=10)
-            wrapper.grid(row=0, column=index, sticky="nsew", padx=(0 if index == 0 else 6, 0 if index == len(self.columns) - 1 else 6))
+            wrapper = ttk.Frame(self, style="IH.Card.TFrame", padding=(8, 8))
+            wrapper.grid(row=0, column=index, sticky="nsew", padx=(0 if index == 0 else 4, 0 if index == len(self.columns) - 1 else 4))
 
             header = ttk.Frame(wrapper, style="IH.Card.TFrame")
             header.pack(fill="x", pady=(0, 8))
@@ -93,27 +94,39 @@ class IHKanbanBoard(ttk.Frame):
                 self._render_card(frame, card, statuses)
 
     def _render_card(self, master, card: dict, statuses: list[str]) -> None:
-        item = ttk.Frame(master, style="IH.Card.TFrame", padding=(10, 9))
-        item.pack(fill="x", pady=(0, 8))
+        item = ttk.Frame(master, style="IH.Card.TFrame", padding=(8, 7))
+        item.pack(fill="x", pady=(0, 6))
 
-        ttk.Label(item, text=str(card.get("title", "")), style="IH.CardTitle.TLabel", wraplength=260).pack(anchor="w")
+        top = ttk.Frame(item, style="IH.Card.TFrame")
+        top.pack(fill="x", pady=(0, 3))
         subtitle = card.get("subtitle")
         if subtitle:
-            ttk.Label(item, text=str(subtitle), style="IH.CardMuted.TLabel", wraplength=260).pack(anchor="w", pady=(2, 6))
-
-        footer = ttk.Frame(item, style="IH.Card.TFrame")
-        footer.pack(fill="x", pady=(6, 0))
+            ttk.Label(top, text=str(subtitle), style="IH.CardMuted.TLabel").pack(side="left")
         priority = str(card.get("priority", "normal"))
-        IHBadge(footer, text=priority, variant=self._priority_variant(priority)).pack(side="left")
-        status_var = ttk.StringVar(value=str(card.get("status", "")))
-        status_input = ttk.Combobox(footer, textvariable=status_var, values=statuses, state="readonly", width=14, style="IH.TCombobox")
-        status_input.pack(side="right")
-        status_input.bind("<<ComboboxSelected>>", lambda _event, c=card, v=status_var: self._change_status(c, v.get()))
+        IHBadge(top, text=priority, variant=self._priority_variant(priority)).pack(side="right")
+
+        ttk.Label(item, text=str(card.get("title", "")), style="IH.Surface.TLabel", wraplength=240).pack(anchor="w", pady=(0, 4))
 
         meta = metadata_text(card.get("metadata"))
         if meta:
-            ttk.Label(item, text=meta, style="IH.CardMuted.TLabel", wraplength=260).pack(anchor="w", pady=(8, 0))
+            ttk.Label(item, text=meta, style="IH.CardMuted.TLabel", wraplength=240).pack(anchor="w", pady=(0, 6))
+
+        status_var = ttk.StringVar(value=str(card.get("status", "")))
+        status_input = ttk.Combobox(item, textvariable=status_var, values=statuses, state="readonly", width=14, style="IH.TCombobox")
+        status_input.pack(fill="x")
+        status_input.bind("<<ComboboxSelected>>", lambda _event, c=card, v=status_var: self._change_status(c, v.get()))
+        status_input.bind("<MouseWheel>", self._scroll_parent_column)
+
         self._bind_click(item, card)
+
+    def _scroll_parent_column(self, event) -> str:
+        w = event.widget.master
+        while w is not None:
+            if isinstance(w, IHScrollFrame):
+                w.canvas.yview_scroll(int(-3 * (event.delta / 120)), "units")
+                break
+            w = getattr(w, "master", None)
+        return "break"
 
     def _bind_click(self, widget, card: dict) -> None:
         if isinstance(widget, ttk.Combobox):
